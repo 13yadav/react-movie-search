@@ -17,7 +17,7 @@ const App = () => {
     }
 
     useEffect(() => {
-        searchMovies('spiderman')
+        searchMovies('doctor strange')
     }, []);
 
     return (
@@ -29,6 +29,11 @@ const App = () => {
                     placeholder="Search for movies"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyPress={(event => {
+                        if (event.key === 'Enter') {
+                            searchMovies(searchTerm)
+                        }
+                    })}
                 />
                 <img src={SearchIcon} alt="search" onClick={() => searchMovies(searchTerm)}/>
             </div>
@@ -36,7 +41,7 @@ const App = () => {
             {movies?.length > 0 ? (
                 <div className="container">
                     {movies.map((movie => (
-                        <MovieCard movie={movie}/>
+                        <MovieCard key={movie.imdbID} movie={movie}/>
                     )))}
                 </div>
             ) : (
